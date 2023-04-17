@@ -33,5 +33,31 @@ def getapi():
         return jsonify({"error": str(e)})
 
 
+@app.route("/postapi", methods=["post"])
+def postapi():
+    # how to post data from mongodb using python flask
+    data = request.get_json()
+    name = data["name"]
+    age = data["age"]
+    address = data["address"]
+    department = data["department"]
+    Employee_status = data["Employee_status"]
+
+    try:
+        api.insert_one(
+            {
+                "name": name,
+                "age": age,
+                "address": address,
+                "department": department,
+                "Employee_status": Employee_status,
+            }
+        )
+        return jsonify({"message": "success"})
+
+    except Exception as e:
+        return jsonify({"error": str(e)})
+
+
 if __name__ == "__main__":
     app.run(debug=True)
